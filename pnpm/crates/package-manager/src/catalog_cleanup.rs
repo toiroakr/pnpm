@@ -131,7 +131,7 @@ fn derive_workspace_dir(
 /// off, when lockfile persistence is disabled (`lockfile: false` — the
 /// on-disk lockfile would be stale), and when no lockfile exists,
 /// mirroring the `all_projects` guard of the catalog cleanup.
-pub(crate) fn post_install_prune(
+pub fn post_install_prune(
     config: &Config,
     workspace_dir: Option<&Path>,
     current_manifest: &PackageManifest,

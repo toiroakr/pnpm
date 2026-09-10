@@ -34,7 +34,7 @@ pub use workspace_cycles::{
 mod add;
 mod build_resolution_verifiers;
 mod build_snapshot;
-mod catalog_cleanup;
+pub mod catalog_cleanup;
 mod catalog_mode;
 mod check_custom_resolver_force_resolve;
 mod compat_package_extensions;

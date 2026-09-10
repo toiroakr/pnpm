@@ -24,8 +24,8 @@ use pnpm_package_manager::{
     Install, InstallFrozenLockfileError, LockfileVerificationOverride, ProjectMutation,
     SkippedSnapshots, TarballPrefetcher, UpToDateFastPathCheck, UpdateSeedPolicy,
     WantedLockfileSatisfactionCheck, WorkspaceInstallSelection, build_resolution_verifiers,
-    install_already_up_to_date, materialization_closure, merge_filtered_wanted_lockfile,
-    wanted_lockfile_satisfies_workspace,
+    catalog_cleanup::post_install_prune, install_already_up_to_date, materialization_closure,
+    merge_filtered_wanted_lockfile, wanted_lockfile_satisfies_workspace,
 };
 use pnpm_package_manifest::DependencyGroup;
 use pnpm_pnpr_client::{
@@ -691,6 +691,13 @@ impl InstallArgs {
             None => install.run::<Reporter>().await,
         }
         .wrap_err("installing dependencies")?;
+
+        // `add`/`remove`/`update` each run this same pass after settling;
+        // `install` (frozen or not) and `dedupe` wrote a lockfile here too,
+        // so the `minimumReleaseAgeExcludePrune`/`trustPolicyExcludePrune`
+        // passes belong here as well — otherwise they only ever run from
+        // those three commands, never from a plain `install`/`dedupe`.
+        post_install_prune(config, None, manifest).wrap_err("pruning workspace policy excludes")?;
 
         // The parsed wanted lockfile and the selection's project
         // manifests are pure data nothing reads between here and exit.
