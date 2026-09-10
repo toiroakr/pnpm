@@ -24,8 +24,8 @@ use pnpm_lockfile::{Lockfile, PkgNameVerPeer};
 use pnpm_modules_yaml::{Host, read_modules_manifest};
 use pnpm_package_manager::{
     ImporterDiffKey, Install, InstallabilityHost, LockfileDiff, ProjectMutation,
-    ResolutionObserver, ResolvedPackageHint, SnapshotDiff, diff_lockfiles,
-    package_metadata_is_installable,
+    ResolutionObserver, ResolvedPackageHint, SnapshotDiff, catalog_cleanup::post_install_prune,
+    diff_lockfiles, package_metadata_is_installable,
 };
 use pnpm_package_manifest::DependencyGroup;
 use pnpm_reporter::{
@@ -203,10 +203,18 @@ impl DedupeArgs {
         .wrap_err("deduplicating dependencies")?;
 
         if self.check {
-            check_lockfile::<Reporter>(existing.as_deref(), guard.unwrap(), lockfile_path)
-        } else {
-            Ok(())
+            return check_lockfile::<Reporter>(existing.as_deref(), guard.unwrap(), lockfile_path);
         }
+
+        // `add`/`remove`/`update` each run this same pass after settling;
+        // `dedupe` wrote a lockfile here too, so the
+        // `minimumReleaseAgeExcludePrune`/`trustPolicyExcludePrune` passes
+        // belong here as well — otherwise they only ever run from those
+        // three commands, never from `dedupe`. Skipped above for `--check`,
+        // which must leave `pnpm-workspace.yaml` untouched (same reasoning
+        // as `persist_policy_excludes` on the `Install` above).
+        post_install_prune(config, None, manifest).wrap_err("pruning workspace policy excludes")?;
+        Ok(())
     }
 }
 
