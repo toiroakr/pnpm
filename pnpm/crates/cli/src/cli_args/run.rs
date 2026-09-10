@@ -207,7 +207,7 @@ impl RunArgs {
         let silent = matches!(reporter, ReporterType::Silent);
         let parallel = self.parallel;
         let sequential = self.sequential;
-        let RunArgs { script, if_present, .. } = self;
+        let RunArgs { script, if_present, no_bail, .. } = self;
         let Some((script_name, args)) = script.split_first() else {
             let manifest = read_project_manifest_only(dir).map_err(RunError::Manifest)?;
             println!("{}", render_project_commands(manifest.value(), None));
@@ -263,6 +263,7 @@ impl RunArgs {
             failure: Mutex::new(None),
             abort: Mutex::new(None),
             process_tracker: process_tracker.as_ref(),
+            bail: !no_bail,
         };
         run_selected_scripts(&ctx, &outcome, specified, args, concurrency)?;
         outcome.into_result()
@@ -508,12 +509,16 @@ fn script_concurrency(
 }
 
 /// Where a script's failure is recorded. The first failure is the one
-/// the command exits with; a failure also cancels the scripts still
-/// running beside it.
+/// the command exits with; when `bail` is set (the default; `--no-bail`
+/// clears it), a failure also cancels the scripts still running beside
+/// it. An engine-level [`Self::abort`] (not a script failure) always
+/// cancels siblings regardless of `bail` — it isn't the "let independent
+/// scripts finish" case `--no-bail` addresses.
 struct ScriptOutcome<'a> {
     failure: Mutex<Option<ScriptExit>>,
     abort: Mutex<Option<miette::Report>>,
     process_tracker: Option<&'a ProcessTracker>,
+    bail: bool,
 }
 
 impl ScriptOutcome<'_> {
@@ -535,7 +540,9 @@ impl ScriptOutcome<'_> {
         if failure.is_none() {
             *failure = Some(exit);
         }
-        self.cancel_siblings();
+        if self.bail {
+            self.cancel_siblings();
+        }
         TaskCompletion::Failed
     }
 
