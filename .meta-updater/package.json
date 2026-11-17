@@ -1,7 +1,12 @@
 {
   "name": "@pnpm-private/updater",
-  "version": "1100.0.29",
   "private": true,
+  "version": "1100.0.29",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/tree/main/.meta-updater",
   "type": "module",
   "scripts": {
     "lint": "eslint \"src/**/*.ts\"",
@@ -23,10 +28,5 @@
   },
   "devDependencies": {
     "@pnpm-private/updater": "workspace:*"
-  },
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "repository": "https://github.com/pnpm/pnpm/tree/main/.meta-updater"
+  }
 }

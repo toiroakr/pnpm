@@ -1,41 +1,41 @@
 {
   "name": "@pnpm/tsconfig",
-  "description": "pnpm's TypeScript configuration",
   "private": true,
   "version": "1100.0.0",
+  "description": "pnpm's TypeScript configuration",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "license": "MIT",
   "author": {
     "name": "Zoltan Kochan",
     "email": "z@kochan.io",
     "url": "https://www.kochan.io/"
   },
-  "license": "MIT",
-  "main": "tsconfig.json",
-  "homepage": "https://github.com/pnpm/pnpm/blob/main/__utils__/tsconfig#readme",
+  "funding": "https://opencollective.com/pnpm",
   "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/tsconfig",
+  "homepage": "https://github.com/pnpm/pnpm/blob/main/__utils__/tsconfig#readme",
   "bugs": {
     "url": "https://github.com/pnpm/pnpm/issues"
   },
-  "devDependencies": {
-    "@pnpm/tsconfig": "workspace:*"
-  },
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "engines": {
-    "node": ">=14.6"
+  "main": "tsconfig.json",
+  "exports": {
+    ".": "./tsconfig.json"
   },
   "files": [
     "lib",
     "!*.map"
   ],
-  "funding": "https://opencollective.com/pnpm",
   "scripts": {
     "test": "pn compile",
     "compile": "tsc --build && pn lint --fix",
     "prepublishOnly": "pn compile"
   },
-  "exports": {
-    ".": "./tsconfig.json"
+  "devDependencies": {
+    "@pnpm/tsconfig": "workspace:*"
+  },
+  "engines": {
+    "node": ">=14.6"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@pnpm/testing.registry-mock",
-  "version": "1100.0.11",
   "private": true,
+  "version": "1100.0.11",
   "description": "Thin test helpers that talk to the mock npm registry — wraps registry-access.commands with REGISTRY_MOCK_PORT and REGISTRY_MOCK_CREDENTIALS baked in.",
   "keywords": [
     "pnpm",
@@ -35,10 +35,10 @@
     "@pnpm/network.fetch": "workspace:*",
     "@pnpm/registry-access.client": "workspace:*"
   },
-  "engines": {
-    "node": ">=22.13"
-  },
   "devDependencies": {
     "@pnpm/testing.registry-mock": "workspace:*"
+  },
+  "engines": {
+    "node": ">=22.13"
   }
 }

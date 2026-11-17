@@ -1,7 +1,12 @@
 {
   "name": "@pnpm/get-release-text",
-  "version": "1100.0.4",
   "private": true,
+  "version": "1100.0.4",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/get-release-text",
   "type": "module",
   "scripts": {
     "write-release-text": "node src/main.ts",
@@ -27,10 +32,5 @@
   },
   "jest": {
     "preset": "@pnpm/jest-config"
-  },
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/get-release-text"
+  }
 }

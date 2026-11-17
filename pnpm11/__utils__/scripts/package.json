@@ -1,7 +1,12 @@
 {
   "name": "@pnpm/scripts",
-  "version": "1100.0.21",
   "private": true,
+  "version": "1100.0.21",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/scripts",
   "type": "module",
   "scripts": {
     "test": "pn .test",
@@ -28,10 +33,5 @@
   },
   "jest": {
     "preset": "@pnpm/jest-config"
-  },
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/scripts"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@pnpm/testing.mock-agent",
-  "version": "1101.0.7",
   "private": true,
+  "version": "1101.0.7",
   "description": "Shared undici MockAgent helpers for pnpm tests",
   "keywords": [
     "pnpm",
@@ -37,10 +37,10 @@
   "peerDependencies": {
     "@pnpm/network.fetch": "workspace:*"
   },
-  "engines": {
-    "node": ">=22.13"
-  },
   "devDependencies": {
     "@pnpm/testing.mock-agent": "workspace:*"
+  },
+  "engines": {
+    "node": ">=22.13"
   }
 }

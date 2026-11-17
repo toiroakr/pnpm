@@ -1,9 +1,14 @@
 {
   "name": "pd",
-  "version": "1100.0.22",
-  "bin": "pd.js",
   "private": true,
+  "version": "1100.0.22",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/pnpm/dev",
   "type": "module",
+  "bin": "pd.js",
   "scripts": {
     "test": "pn .test",
     ".test": "node pd.js --version"
@@ -16,10 +21,5 @@
   },
   "devDependencies": {
     "pd": "workspace:*"
-  },
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/pnpm/dev"
+  }
 }

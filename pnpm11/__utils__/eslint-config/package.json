@@ -1,12 +1,19 @@
 {
   "name": "@pnpm/eslint-config",
-  "description": "pnpm's ESLint configuration",
   "version": "1100.0.1",
+  "description": "pnpm's ESLint configuration",
+  "keywords": [
+    "pnpm",
+    "pnpm11"
+  ],
+  "license": "MIT",
   "author": {
     "name": "Zoltan Kochan",
     "email": "z@kochan.io",
     "url": "https://www.kochan.io/"
   },
+  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/eslint-config",
+  "homepage": "https://pnpm.io",
   "bugs": {
     "url": "https://github.com/pnpm/eslint-config/issues"
   },
@@ -15,16 +22,6 @@
   "directories": {
     "test": "test"
   },
-  "homepage": "https://pnpm.io",
-  "keywords": [
-    "pnpm",
-    "pnpm11"
-  ],
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.18.0"
-  },
-  "repository": "https://github.com/pnpm/pnpm/tree/main/pnpm11/__utils__/eslint-config",
   "scripts": {},
   "dependencies": {
     "@eslint/js": "catalog:",
@@ -41,5 +38,8 @@
     "@pnpm/eslint-config": "workspace:*",
     "@typescript-eslint/utils": "catalog:",
     "eslint-plugin-jest": "catalog:"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   }
 }
