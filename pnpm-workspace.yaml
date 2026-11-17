@@ -588,3 +588,6 @@ update:
     - write-file-atomic
 
 virtualStoreType: global
+
+lockfile:
+  format: v13
