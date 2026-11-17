@@ -27,7 +27,7 @@ concurrency:
 jobs:
   changes:
     name: Rust CI / Detect Changes
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     outputs:
       rust: ${{ steps.manual.outputs.rust || steps.filter.outputs.rust }}
     steps:
@@ -93,11 +93,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: blacksmith-8vcpu-windows-2025
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-8vcpu-windows-2025' || 'windows-latest' }}
             os_label: windows
-          - os: blacksmith-8vcpu-ubuntu-2404
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-8vcpu-ubuntu-2404' || 'ubuntu-latest' }}
             os_label: ubuntu
-          - os: blacksmith-12vcpu-macos-latest
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-12vcpu-macos-latest' || 'macos-latest' }}
             os_label: macos
     runs-on: ${{ matrix.os }}
     # Backstop for hangs outside nextest's per-test terminate-after
@@ -244,7 +244,7 @@ jobs:
     # whole test matrix just triples the cost. Mirrors the single-OS doc,
     # format, and dylint jobs. (Platform-gated `#[cfg]` blocks are still
     # type-checked per-OS by the test job's build.)
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -270,7 +270,7 @@ jobs:
     name: Rust CI / Doc
     needs: changes
     if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true') }}
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -298,11 +298,11 @@ jobs:
           # and runs a shebang-less bin, and those are where the platforms
           # differ. Windows runs neither, so those tests skip themselves there;
           # macOS reaches them through a BSD `sh`, `readlink`, and `dirname`.
-          - os: blacksmith-4vcpu-ubuntu-2404
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
             os_label: ubuntu
-          - os: blacksmith-12vcpu-macos-latest
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-12vcpu-macos-latest' || 'macos-latest' }}
             os_label: macos
-          - os: blacksmith-8vcpu-windows-2025
+          - os: ${{ github.repository_owner == 'pnpm' && 'blacksmith-8vcpu-windows-2025' || 'windows-latest' }}
             os_label: windows
     runs-on: ${{ matrix.os }}
     steps:
@@ -350,7 +350,7 @@ jobs:
     name: Rust CI / Spell Check
     needs: changes
     if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true') }}
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -364,7 +364,7 @@ jobs:
     name: Rust CI / Cargo Deny
     needs: changes
     if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true') }}
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -392,7 +392,7 @@ jobs:
     name: Rust CI / Format
     needs: changes
     if: ${{ !cancelled() && (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true') }}
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -417,7 +417,7 @@ jobs:
     name: Rust CI / Dylint
     needs: changes
     if: ${{ always() && !cancelled() && (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true' || needs.changes.result != 'success') }}
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - name: Verify change detection
         if: ${{ needs.changes.result != 'success' }}
@@ -523,7 +523,7 @@ jobs:
       - deny
       - format
       - dylint
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.repository_owner == 'pnpm' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     steps:
       - name: Fail if any dependency failed or was cancelled
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
